@@ -10,7 +10,7 @@ The information of the job application and the company will be autommatically by
 
 ## Installation
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. 
+Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) and Python >=3.10 <=3.13 installed on your system. 
 
 Clone the repository:
 
