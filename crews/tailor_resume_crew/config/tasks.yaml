@@ -1,0 +1,51 @@
+pdf_to_md_cv_task:
+  description: >
+    Extract relevant information from the PDF resume. 
+    Focus on skills, experience, education, key achievements, etc.
+    Use the PDFSearchTool to extract information from the CV.
+    Ensure to capture the candidate's professional summary, technical skills,
+    work history, and educational background.
+    Create a markdown file with the extracted information.
+    Use the PDFSearchTool to read the resume content from the PDF file.
+    resume source PDF file: {linkedin_source_resume_path}
+
+  expected_output: >
+    A structured summary of the CV in MD format
+    If you don't find a information, dont mention it on the generated resume.
+    A resume should look like the one in {base_resume}.
+    Formatted as markdown without '```'
+
+extract_job_requirements_task:
+  description: >
+    Extract key requirements and responsibilities from the job posting.
+    Focus on identifying the skills, experiences, and qualifications needed for
+    the job.
+
+    Original Job Posting: {job_posting}
+  expected_output: >
+    A summary of the job requirements including key skills, experiences, and qualifications.
+
+tailor_resume_task:
+  description: >
+    Adjust the resume content to highlight the most relevant skills and
+    experiences for the job posting.
+    Frame the content to better fit the job requirements without misrepresenting
+    the candidate's abilities.
+
+    Original Job Posting: {job_posting}
+    Initial Resume: {linkedin_md_target_resume_path}
+  expected_output: >
+    A tailor-made resume in markdown format that highlights the most relevant
+    skills, experiences, and qualifications for the job posting, making sure
+    never fake this infromations, it should only include things you know the person
+    is good at and can do.
+    we are optmizeing for the person to get an interview. do not include ```.
+    the resume language should be the same as the language of the job posting.
+    use the FileReadTool to read the initial resume in {linkedin_md_target_resume_path} and the informations
+    from the extract_job_requirements_task.
+    {user_considerations_for_resume_crew}
+    Formatted as markdown without '```'
+  context:
+    - pdf_to_md_cv_task
+    - extract_job_requirements_task
+    

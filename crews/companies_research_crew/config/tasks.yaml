@@ -1,0 +1,64 @@
+research_task:
+  description: >
+    Conduct a thorough research about {company} from {company_location}.
+    Make sure you find any interesting and relevant information given
+    the current year is 2024.
+    Use the SerperDevTool to search for relevant information.
+    Use the {company_url} to get a base for the search.
+    Search for linkedin, twitter, facebook, and other social media.
+  expected_output: >
+    A list with bullet points of the most relevant information about {company}.
+    Make sure to include the following information about the company:
+    - actuation fields.
+    - main business activities, revenue sources, customers.
+    - main competitors.
+    - mission and vision.
+    - Company Culture
+    - any other relevant information.
+    
+    Don't create or fake information, if you don't find information about a topic return 'No relevant information found'.
+    Allways write the output in the company's language.
+  agent: researcher
+
+reporting_task:
+  description: >
+    Review the context you got and expand each topic into a full section for a report.
+    Make sure the report is detailed and contains any and all relevant information.
+    The report is gone be used for the user to apply for a job in the {company} company.
+  expected_output: >
+    A fully fledge reports with the mains topics, each with a full section of information.
+    Formatted as markdown without '```'
+    Don't create or fake information, if you don't find information about a topic return 'No relevant information found'.
+    Allways write the output in the company's language.
+    {user_considerations_for_companies_research_crew}
+    use the following template as base for the report:
+    [template]
+      {company} Company Report
+      ==========================
+
+      **Company Overview**
+      ---------------------
+        * Actuation fields: [actuation_fields]
+        * Main business activities: [business_activities]
+        * Main competitors: [main_competitors]
+        * Mission and vision: [mission_and_vision]
+        * Any other relevant information: [any_other_relevant_information]
+
+      **Company Culture**
+      ------------------
+
+      **Benefits and Perks**
+      ---------------------
+
+      **Career Development Opportunities**
+      ---------------------------------
+
+      **Work Environment**
+      ------------------
+
+      **Why Work at {company}**
+      ---------------------------
+    [/template]
+  agent: reporting_analyst
+  context: 
+    - research_task
