@@ -50,3 +50,13 @@ python app.py
 This command initializes the Gradio interface and starts the web server on `http://127.0.0.1:7860`.
 
 This example, unmodified, will create a company report, a crew generated resume and a reviewed email for the job application. The files will be saved in the outputs folder.
+
+## How the Project Works
+
+Based on the job application, the company and the user LinkedIn profile, the crews will work as follows:
+
+1. The `Tailor Resume Crew` will convert the user PDF LinkedIn profile into a Markdown filecrew generated resume, scrap the job application URL and adjust the user resume accordingly.
+
+2. The `Company Report Crew` will search for the company information using the Serper API and create a detailed report on the company main points.
+
+3. Then the `Email Writer Crew` will create an email based on the company report, the user resume and the job application information for the user to send.
