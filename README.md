@@ -41,12 +41,12 @@ Add the `OPENAI_API_KEY` and `SERPER_API_KEY` into the `.env` file.
 
 ## Running the Project
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+To kickstart the project run the following command to initialize the interface:
 
 ```bash
 python app.py
 ```
 
-This command initializes the flow_job_application Crew, assembling the agents and assigning them tasks as defined in your configuration.
+This command initializes the Gradio interface and starts the web server on `http://127.0.0.1:7860`.
 
 This example, unmodified, will create a company report, a crew generated resume and a reviewed email for the job application. The files will be saved in the outputs folder.
