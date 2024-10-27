@@ -21,7 +21,7 @@ application_examiner_task:
     A evaluation of the job application email from 0 to 10.
     If the evaluation is lower than 9, you have to write the email in the company/resume native language with your thoughts.
     If the evaluation is higher than 9, return the email as it is.
-    Don't include the evaluation in the email.
+    Don't include your evaluation notes in the email.
     Formatted as markdown without '```'
     Allways write the email in the company/resume native language.
   agent: application_examiner

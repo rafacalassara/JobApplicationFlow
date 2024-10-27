@@ -23,10 +23,10 @@ class JobApplicationFlow(Flow):
             
             "email_file_path": "outputs/email.md",
             "reviewed_email_file_path": "outputs/reviewed_email.md",
-            "job_posting": 'https://www.linkedin.com/jobs/view/4060688413/',
             "linkedin_source_resume_path": "inputs/source_resume.pdf",
 
             # Hard coded inputs
+            "job_posting": 'https://www.linkedin.com/jobs/view/4060688413/',
             "company": "L3 IT is about People",
             "company_url" : "https://l3.com.br/",
             "company_location": "São Paulo, São Paulo",

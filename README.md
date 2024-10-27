@@ -1,56 +1,52 @@
-# {{crew_name}} Crew
+# JobApplicationFlow
 
-Welcome to the {{crew_name}} Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Welcome to the JobApplicationFlow Crew project, powered by [crewAI](https://crewai.com) and [Gradio](https://gradio.app). 
+
+This project is a flow of AI agents that will generate a job application report, a crew generated resume and a reviewed email for a job application based on the user LinkedIn profile resume, job posting and company information.
+
+The information of the job application and the company will be autommatically by the crews that we use based on the informations we pass in the interface.
+
+![app_interface](.assets/app_interface.png)
 
 ## Installation
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+Ensure you have Python >=3.10 <=3.13 installed on your system. 
 
-First, if you haven't already, install uv:
+Clone the repository:
 
-```bash
-pip install uv
+```bash	
+git clone https://github.com/rafacalassara/JobApplicationFlow.git
+cd JobApplicationFlow
 ```
 
-Next, navigate to your project directory and install the dependencies:
+Create a conda environment:
 
-(Optional) Lock the dependencies and install them by using the CLI command:
 ```bash
-crewai install
+conda create -n job_application_flow python=3.12
 ```
 
-### Customizing
+Next, activate the environment:
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+```bash
+conda activate job_application_flow
+```
 
-- Modify `src/flow_job_application/config/agents.yaml` to define your agents
-- Modify `src/flow_job_application/config/tasks.yaml` to define your tasks
-- Modify `src/flow_job_application/crew.py` to add your own logic, tools and specific args
-- Modify `src/flow_job_application/main.py` to add custom inputs for your agents and tasks
+Now install the dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Add the `OPENAI_API_KEY` and `SERPER_API_KEY` into the `.env` file.
 
 ## Running the Project
 
 To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
 
 ```bash
-crewai run
+python app.py
 ```
 
 This command initializes the flow_job_application Crew, assembling the agents and assigning them tasks as defined in your configuration.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
-
-## Understanding Your Crew
-
-The flow_job_application Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the {{crew_name}} Crew or crewAI.
-
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
+This example, unmodified, will create a company report, a crew generated resume and a reviewed email for the job application. The files will be saved in the outputs folder.
