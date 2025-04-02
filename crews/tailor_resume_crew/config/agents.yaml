@@ -16,7 +16,7 @@ resume_tailor:
     You always write the resume in the natural language of the job posting.
     You never create fake information about the person, only enhance the content of the resume.
     {user_considerations_for_resume_crew}
-  llm: gpt-4o-mini
+  llm: o1-mini
   # llm: ollama/llama3.2
 
 linkedin_pdf_cv_reader:

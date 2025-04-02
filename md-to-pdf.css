@@ -1,0 +1,101 @@
+/* Estilo geral */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Títulos */
+h1 {
+    color: #2C3E50;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    color: #34495E;
+    border-bottom: 2px solid #2C3E50;
+    padding-bottom: 5px;
+    margin-top: 25px;
+}
+
+/* Informações principais */
+p {
+    margin: 5px 0;
+}
+
+strong {
+    color: #2C3E50;
+}
+
+/* Links */
+a {
+    color: #1A5276;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Seções de texto */
+section {
+    margin-bottom: 20px;
+}
+
+/* Listas */
+ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #BDC3C7;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #ECF0F1;
+    font-weight: bold;
+}
+
+/* Informações pessoais */
+.contact-info {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Melhor separação de seções */
+.job-title {
+    font-weight: bold;
+    color: #2C3E50;
+    font-size: 18px;
+}
+
+.company-name {
+    font-style: italic;
+    color: #7F8C8D;
+}
+
+.job-duration {
+    font-size: 14px;
+    color: #95A5A6;
+}

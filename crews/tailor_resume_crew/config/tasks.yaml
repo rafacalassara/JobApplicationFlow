@@ -43,6 +43,7 @@ tailor_resume_task:
     the resume language should be the same as the language of the job posting.
     use the FileReadTool to read the initial resume in {linkedin_md_target_resume_path} and the informations
     from the extract_job_requirements_task.
+    The resume language must be {resume_language}.
     {user_considerations_for_resume_crew}
     Formatted as markdown without '```'
   context:

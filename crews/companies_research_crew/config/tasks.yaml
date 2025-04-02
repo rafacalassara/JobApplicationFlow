@@ -2,7 +2,7 @@ research_task:
   description: >
     Conduct a thorough research about {company} from {company_location}.
     Make sure you find any interesting and relevant information given
-    the current year is 2024.
+    the current date is {current_date}.
     Use the SerperDevTool to search for relevant information.
     Use the {company_url} to get a base for the search.
     Search for linkedin, twitter, facebook, and other social media.

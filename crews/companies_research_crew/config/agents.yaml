@@ -24,4 +24,4 @@ reporting_analyst:
     can help user to apply for a job in the company.
   # llm: groq/llama-3.1-70b-versatile
   # llm: ollama/llama3.2
-  llm: gpt-4o-mini
+  llm: o1-mini

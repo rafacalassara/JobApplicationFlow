@@ -6,3 +6,5 @@ lib/
 db/
 
 outputs/*.md
+inputs/*.pdf
+.gradio/
