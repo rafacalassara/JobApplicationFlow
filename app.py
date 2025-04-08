@@ -280,4 +280,4 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
