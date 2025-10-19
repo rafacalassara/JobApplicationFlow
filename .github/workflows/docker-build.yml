@@ -1,0 +1,53 @@
+name: Docker Build Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-gradio:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Gradio Docker image
+      run: |
+        docker build -t job-application-gradio .
+        
+    - name: Verify image
+      run: |
+        docker images | grep job-application-gradio
+
+  build-mcp:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build MCP Docker image
+      run: |
+        docker build -f Dockerfile.mcp -t job-application-mcp .
+        
+    - name: Verify image
+      run: |
+        docker images | grep job-application-mcp
+
+  validate-python:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Check Python syntax
+      run: |
+        python -m py_compile mcp_server.py main.py app.py
+        
+    - name: Validate configuration files
+      run: |
+        python -c "import yaml; yaml.safe_load(open('docker-compose.yml'))"
+        python -c "import json; json.load(open('mcp_config.json'))"

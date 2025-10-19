@@ -1,10 +1,38 @@
 .env
 venv/
+env/
+.venv/
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 lib/
 
 db/
 
 outputs/*.md
+outputs/*.pdf
+outputs/*.html
 inputs/*.pdf
 .gradio/
+
+# Docker
+*.log
+
+# Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
