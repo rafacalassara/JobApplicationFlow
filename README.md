@@ -8,6 +8,22 @@ The information of the job application and the company will be autommatically by
 
 ![app_interface](.assets/app_interface.png)
 
+## 🚀 New: MCP Server Support
+
+This project now includes a **Model Context Protocol (MCP) server** that exposes job application tools to any LLM client (Claude Desktop, Zed, etc.). 
+
+### Quick Start with MCP
+
+```bash
+# Install UV (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Run the standalone MCP server (no venv needed!)
+uv run mcp_server_standalone.py
+```
+
+For detailed MCP setup and usage instructions, see [MCP_SERVER.md](MCP_SERVER.md).
+
 ## Installation
 
 Ensure you have [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) and Python >=3.10 <=3.13 installed on your system. 
@@ -41,6 +57,8 @@ Add the `OPENAI_API_KEY` and `SERPER_API_KEY` into the `.env` file.
 
 ## Running the Project
 
+### Option 1: Gradio Web Interface
+
 To kickstart the project run the following command to initialize the interface:
 
 ```bash
@@ -48,6 +66,27 @@ python app.py
 ```
 
 This command initializes the Gradio interface and starts the web server on `http://127.0.0.1:7860`.
+
+### Option 2: MCP Server (for LLM Clients)
+
+See [MCP_SERVER.md](MCP_SERVER.md) for complete MCP server documentation.
+
+### Option 3: Docker Compose (Both Services)
+
+Run both the Gradio UI and MCP server with Docker:
+
+```bash
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+
+# Start both services
+docker-compose up -d
+```
+
+This will start:
+- **Gradio UI** at `http://localhost:7860`
+- **MCP Server** as a background service
 
 This example, unmodified, will create a company report, a crew generated resume and a reviewed email for the job application. The files will be saved in the outputs folder.
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 from datetime import datetime
 from crewai.flow.flow import Flow, listen, start
 
@@ -16,17 +17,25 @@ class JobApplicationFlow(Flow):
     def __init__(self, inputs: dict = {}, **kwargs):
         super().__init__(**kwargs)
 
+        # Get base paths from environment or use defaults
+        input_path = os.getenv("INPUT_PATH", "inputs")
+        output_path = os.getenv("OUTPUT_PATH", "outputs")
+        
+        # Ensure output directory exists
+        os.makedirs(output_path, exist_ok=True)
+        os.makedirs(input_path, exist_ok=True)
+
         self.inputs = {
-            "base_resume": "inputs/base_resume.md",
+            "base_resume": f"{input_path}/base_resume.md",
 
-            "linkedin_md_target_resume_path": "outputs/linkedin_md_target_resume.md",
-            "crew_generated_resume_path": "outputs/crew_generated_resume.md",
+            "linkedin_md_target_resume_path": f"{output_path}/linkedin_md_target_resume.md",
+            "crew_generated_resume_path": f"{output_path}/crew_generated_resume.md",
 
-            "company_report_path": "outputs/company_report.md",
+            "company_report_path": f"{output_path}/company_report.md",
 
-            "email_file_path": "outputs/email.md",
-            "reviewed_email_file_path": "outputs/reviewed_email.md",
-            "linkedin_source_resume_path": "inputs/Profile.pdf",
+            "email_file_path": f"{output_path}/email.md",
+            "reviewed_email_file_path": f"{output_path}/reviewed_email.md",
+            "linkedin_source_resume_path": f"{input_path}/Profile.pdf",
             "current_date": datetime.now().strftime("%Y-%m-%d"),
 
             # Hard coded inputs
