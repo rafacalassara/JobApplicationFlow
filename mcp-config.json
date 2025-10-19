@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "job-application-flow": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file",
+        ".env",
+        "-v",
+        "${PWD}/outputs:/usr/src/app/outputs",
+        "-v",
+        "${PWD}/inputs:/usr/src/app/inputs",
+        "job-application-flow-mcp"
+      ]
+    }
+  }
+}

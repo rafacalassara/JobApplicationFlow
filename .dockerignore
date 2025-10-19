@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs (will be mounted as volumes)
+outputs/
+inputs/*.pdf
+
+# Documentation
+*.md
+.assets/
+
+# Docker
+docker-compose.yml
+Dockerfile*
+.dockerignore
+
+# Environment
+.env
+.env.local
+.env.*.local
