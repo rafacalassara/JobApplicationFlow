@@ -1,11 +1,42 @@
 version: "3.8"
 
 services:
-  job-application-flow:
+  # Gradio UI Application
+  gradio-app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: job-application-gradio
     ports:
-      - 7860:7860
+      - "7860:7860"
     volumes:
-      - .:/usr/src/app
+      - ./outputs:/usr/src/app/outputs
+      - ./inputs:/usr/src/app/inputs
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SERPER_API_KEY=${SERPER_API_KEY}
+    restart: unless-stopped
+    networks:
+      - job-application-network
+
+  # MCP Server
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    container_name: job-application-mcp
+    volumes:
+      - ./outputs:/usr/src/app/outputs
+      - ./inputs:/usr/src/app/inputs
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SERPER_API_KEY=${SERPER_API_KEY}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - job-application-network
+
+networks:
+  job-application-network:
+    driver: bridge

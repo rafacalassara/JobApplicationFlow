@@ -280,4 +280,8 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    # Get server configuration from environment variables
+    server_name = os.getenv("GRADIO_SERVER_NAME", "0.0.0.0")
+    server_port = int(os.getenv("GRADIO_SERVER_PORT", "7860"))
+    
+    demo.launch(server_name=server_name, server_port=server_port)
