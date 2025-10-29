@@ -1,6 +1,5 @@
 
 from pydantic import BaseModel, Field
-from typing import Optional
 from datetime import datetime
 
 
@@ -21,14 +20,6 @@ class JobAppState(BaseModel):
         default="outputs/company_report.md",
         description="Caminho padrão de saída para o relatório de empresa (fixo).",
     )
-    email_file_path: str = Field(
-        default="outputs/email.md",
-        description="Caminho padrão de saída para o e-mail inicial (fixo).",
-    )
-    reviewed_email_file_path: str = Field(
-        default="outputs/reviewed_email.md",
-        description="Caminho padrão de saída para o e-mail revisado (fixo).",
-    )
     linkedin_source_resume_path: str = Field(
         default="inputs/Profile.pdf",
         description="Caminho padrão do PDF exportado do LinkedIn (pode ser sobrescrito pela UI).",
@@ -38,36 +29,32 @@ class JobAppState(BaseModel):
         description="Data corrente no formato YYYY-MM-DD (gerado automaticamente).",
     )
 
-    # Campos dinâmicos (opcionais) fornecidos pela UI/execução
-    job_posting: Optional[str] = Field(
-        default=None,
+    # Campos dinâmicos fornecidos pela UI/execução
+    job_posting: str = Field(
+        default="",
         description="URL da vaga (opcional). Ex.: link da vaga no LinkedIn.",
     )
-    company: Optional[str] = Field(
-        default=None,
+    company: str = Field(
+        default="",
         description="Nome da empresa alvo (opcional).",
     )
-    company_url: Optional[str] = Field(
-        default=None,
+    company_url: str = Field(
+        default="",
         description="URL do site da empresa (opcional).",
     )
-    company_location: Optional[str] = Field(
-        default=None,
+    company_location: str = Field(
+        default="",
         description="Localização da empresa (opcional).",
     )
-    resume_language: Optional[str] = Field(
-        default=None,
+    resume_language: str = Field(
+        default="",
         description="Idioma desejado para o currículo (opcional). Ex.: 'en', 'pt'.",
     )
-    user_considerations_for_resume_crew: Optional[str] = Field(
-        default=None,
+    user_considerations_for_resume_crew: str = Field(
+        default="",
         description="Observações do usuário para a crew de currículo (opcional).",
     )
-    user_considerations_for_companies_research_crew: Optional[str] = Field(
-        default=None,
+    user_considerations_for_companies_research_crew: str = Field(
+        default="",
         description="Observações do usuário para a crew de pesquisa de empresas (opcional).",
-    )
-    user_considerations_for_email_crew: Optional[str] = Field(
-        default=None,
-        description="Observações do usuário para a crew de e-mail (opcional).",
     )

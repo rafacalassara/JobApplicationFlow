@@ -4,19 +4,19 @@ from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
 from crewai_tools import ScrapeWebsiteTool
-from ddgs_tool import DuckDuckGoSearchTool
+from tools.ddgs_tool import DuckDuckGoSearchTool
 
 @CrewBase
 class CompaniesResearchCrew():
 	"""CompaniesResearch crew"""
 	agents_config = 'config/agents.yaml'
-    tasks_config = 'config/tasks.yaml'
+	tasks_config = 'config/tasks.yaml'
 	llm_model : LLM = None
+	inputs:dict = None
 	
-	def __init__(self, inputs:dict) -> None:
-		super().__init__()
+	def __init__(self, inputs:dict, model:str=None):
+		self.llm_config(model)
 		self.inputs = inputs
-		self.llm_config()
 
 	def llm_config(self, model:str) -> LLM:
 		self.llm_model = LLM(
@@ -30,7 +30,6 @@ class CompaniesResearchCrew():
 			config=self.agents_config['researcher'],
 			tools=[DuckDuckGoSearchTool(), ScrapeWebsiteTool()],
 			llm=self.llm_model,
-			cache=True,
 			verbose=True
 		) # type: ignore
 

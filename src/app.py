@@ -2,6 +2,9 @@ import gradio as gr
 import os
 from main import JobApplicationFlow
 from dotenv import load_dotenv
+from pathlib import Path
+import shutil
+from paths import from_root, PROJECT_ROOT
 
 # Load environment variables
 load_dotenv()
@@ -32,22 +35,39 @@ def read_file_content(path):
         return file.read()
 
 def process_job_application(linkedin_source_resume_path, job_posting, company, company_url, company_location,
-                          user_considerations_for_resume_crew, user_considerations_for_companies_research_crew,
-                          user_considerations_for_email_crew):
+                          user_considerations_for_resume_crew, user_considerations_for_companies_research_crew
+                          ):
+    # Normalize uploaded resume path to an absolute path under project inputs/
+    if linkedin_source_resume_path:
+        src_path = Path(getattr(linkedin_source_resume_path, 'name', linkedin_source_resume_path))
+        dest_dir = from_root("inputs")
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        dest_path = dest_dir / src_path.name
+        try:
+            shutil.copy(src_path, dest_path)
+        except Exception:
+            # If copying fails (e.g., same path), fall back to using the original path
+            dest_path = src_path
+        # Use path relative to project root to avoid accidental 'home' dir creation by external tools
+        uploaded_pdf_path = os.path.relpath(dest_path.as_posix(), PROJECT_ROOT.as_posix())
+    else:
+        uploaded_pdf_path = "inputs/Profile.pdf"
+
     inputs = {
-        "linkedin_source_resume_path": linkedin_source_resume_path.name if linkedin_source_resume_path else None,
+        "linkedin_source_resume_path": uploaded_pdf_path,
         "job_posting": job_posting,
         "company": company,
         "company_url": company_url,
         "company_location": company_location,
         "user_considerations_for_resume_crew": user_considerations_for_resume_crew,
         "user_considerations_for_companies_research_crew": user_considerations_for_companies_research_crew,
-        "user_considerations_for_email_crew": user_considerations_for_email_crew,
     }
 
     job_flow = JobApplicationFlow(inputs=inputs)
-    inputs = job_flow.init()
+    # Ensure outputs directory exists for downstream tasks
+    from_root("outputs").mkdir(parents=True, exist_ok=True)
     job_flow.kickoff()
+    inputs = job_flow.state.model_dump()
 
     # For resume, show file info instead of preview
     resume_file_info = f"""
@@ -62,17 +82,14 @@ def process_job_application(linkedin_source_resume_path, job_posting, company, c
         # File paths for downloads
         resume_path: gr.update(value=inputs["crew_generated_resume_path"]),
         report_path: gr.update(value=inputs["company_report_path"]),
-        email_path: gr.update(value=inputs["reviewed_email_file_path"]),
         
         # Preview content
         resume_preview: gr.update(value=resume_file_info),
         report_preview: gr.update(value=read_file_content(inputs["company_report_path"])),
-        email_preview: gr.update(value=read_file_content(inputs["reviewed_email_file_path"])),
         
         # # File names
         # resume_name: gr.update(value=f"📄 {os.path.basename(inputs['crew_generated_resume_path'])}"),
         # report_name: gr.update(value=f"📊 {os.path.basename(inputs['company_report_path'])}"),
-        # email_name: gr.update(value=f"✉️ {os.path.basename(inputs['reviewed_email_file_path'])}"),
         
         # Show the output container
         output_container: gr.update(visible=True),
@@ -201,11 +218,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
                 lines=3,
                 placeholder="Enter specific areas of company research to focus on..."
             )
-            user_considerations_for_email_crew = gr.Textbox(
-                label="Email Content Notes",
-                lines=3,
-                placeholder="Enter specific points to include in the email..."
-            )
+
 
     generate_button = gr.Button(
         "Generate Application Materials",
@@ -249,20 +262,6 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
                     elem_classes=["file-preview"]
                 )
 
-            # Email tab
-            with gr.Tab("Application Email"):
-                # Download section
-                with gr.Row(elem_classes=["file-row"]):
-                    email_path = gr.File(
-                        label="Download Email",
-                        visible=True,
-                        elem_classes=["download-button"]
-                    )
-                # Preview section
-                email_preview = gr.Markdown(
-                    label="Email Preview",
-                    elem_classes=["file-preview"]
-                )
 
     # Event handlers
     generate_button.click(
@@ -272,12 +271,12 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
         fn=process_job_application,
         inputs=[
             linkedin_source_resume_path, job_posting, company, company_url, company_location,
-            user_considerations_for_resume_crew, user_considerations_for_companies_research_crew,
-            user_considerations_for_email_crew
+            user_considerations_for_resume_crew, user_considerations_for_companies_research_crew
+            
         ],
         outputs=[
-            resume_path, report_path, email_path,
-            resume_preview, report_preview, email_preview,
+            resume_path, report_path,
+            resume_preview, report_preview,
             output_container, loading_status, generate_button
         ]
     )

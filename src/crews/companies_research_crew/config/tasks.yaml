@@ -1,11 +1,17 @@
 research_task:
   description: >
-    Conduct a thorough research about {company}, {company_location}.
+    Conduct a thorough research about the company in the job posting.
+    Job posting to get a base for the search: {job_posting}.
+    You must open the job posting and read it carefully to identify the company.
+    After that, you must search for relevant information about the company using the DuckDuckGoSearchTool and the ScrapeWebsiteContentTool.
     Make sure you find any interesting and relevant information given
     the current date is {current_date}.
-    Use the DuckDuckGoSearchTool to search for relevant information.
-    Use the {company_url} to get a base for the search.
-    Search for linkedin, twitter, facebook, and other social media.
+    Use the DuckDuckGoSearchTool to search for relevant information and the ScrapeWebsiteContentTool to scrape relevant information.
+    The user can pass the company information but it is not required, your primary source of information should be the job posting.
+    Search for the company's website, linkedin, twitter, facebook, and other social media.
+
+    Company info: 
+    {company}, {company_location}, {company_url}
   expected_output: >
     A list with bullet points of the most relevant information about {company}.
     Make sure to include the following information about the company:

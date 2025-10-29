@@ -3,6 +3,7 @@ import os
 import markdown2
 import weasyprint
 from pathlib import Path
+from paths import from_root
 
 
 def convert_md_to_pdf(markdown_file: Path, output_pdf: Path, css_file: Path) -> bool:
@@ -87,11 +88,10 @@ def convert_md_to_pdf(markdown_file: Path, output_pdf: Path, css_file: Path) -> 
 
 
 if __name__ == "__main__":
-    # Get paths
-    script_dir = Path(__file__).parent.parent
-    markdown_file = script_dir / "outputs" / "crew_generated_resume.md"
-    css_file = script_dir / "md-to-pdf.css"
-    output_pdf = script_dir / "outputs" / "crew_generated_resume.pdf"
+    # Get paths anchored at project root
+    markdown_file = from_root("outputs", "crew_generated_resume.md")
+    css_file = from_root("src", "md-to-pdf.css")
+    output_pdf = from_root("outputs", "crew_generated_resume.pdf")
 
     # Convert markdown to PDF
     convert_md_to_pdf(markdown_file, output_pdf, css_file)
