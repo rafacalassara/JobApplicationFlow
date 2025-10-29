@@ -1,4 +1,5 @@
-from crewai import Agent, Crew, Process, Task
+import os
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import ScrapeWebsiteTool, FileReadTool, PDFSearchTool
 
@@ -7,17 +8,27 @@ class TailorResumeCrew():
     """TailorResume crew"""
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
-    
-    def __init__(self,inputs:dict) -> None:
-        super().__init__()
-        self.inputs = inputs
-    
+
+    llm_model : LLM = None
+	
+	def __init__(self, inputs:dict) -> None:
+		super().__init__()
+		self.inputs = inputs
+		self.llm_config()
+
+	def llm_config(self, model:str) -> LLM:
+		self.llm_model = LLM(
+			model=os.getenv('RESEARCH_LLM_MODEL', 'gpt-5-mini') if not model else model,
+		)
+		return self.llm_model
+
     @agent
     def linkedin_pdf_cv_reader(self) -> Agent:
         
         return Agent(
             config=self.agents_config['linkedin_pdf_cv_reader'],
             allow_delegation=False,
+            llm=self.llm_model,
             verbose=True,
         )
 
@@ -27,6 +38,7 @@ class TailorResumeCrew():
             config=self.agents_config['job_requirements_extractor'],
             tools=[ScrapeWebsiteTool()],
             allow_delegation=False,
+            llm=self.llm_model,
             verbose=True,
         )
 
@@ -35,6 +47,7 @@ class TailorResumeCrew():
         return Agent(
             config=self.agents_config['resume_tailor'],
             allow_delegation=False,
+            llm=self.llm_model,
             verbose=True,
             tools=[FileReadTool()],
         )
@@ -46,7 +59,7 @@ class TailorResumeCrew():
         return Task(
             config=self.tasks_config['pdf_to_md_cv_task'],
             agent=self.linkedin_pdf_cv_reader(),
-            tools=[PDFSearchTool()],
+            tools=[PDFSearchTool(), FileReadTool()],
             output_file=self.inputs['linkedin_md_target_resume_path']
         )
 

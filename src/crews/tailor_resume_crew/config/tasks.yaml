@@ -2,11 +2,11 @@ pdf_to_md_cv_task:
   description: >
     Extract relevant information from the PDF resume. 
     Focus on skills, experience, education, key achievements, etc.
-    Use the PDFSearchTool to extract information from the CV.
+    Use the PDFSearchTool or FileReadTool to extract information from the CV.
     Ensure to capture the candidate's professional summary, technical skills,
     work history, and educational background.
     Create a markdown file with the extracted information.
-    Use the PDFSearchTool to read the resume content from the PDF file.
+    Use the PDFSearchTool or FileReadTool to read the resume content from the PDF file.
     resume source PDF file: {linkedin_source_resume_path}
 
   expected_output: >
@@ -22,6 +22,7 @@ extract_job_requirements_task:
     the job.
 
     Original Job Posting: {job_posting}
+    Use the ScrapeWebsiteTool to extract information from the job posting.
   expected_output: >
     A summary of the job requirements including key skills, experiences, and qualifications.
 

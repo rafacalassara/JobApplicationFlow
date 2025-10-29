@@ -1,21 +1,35 @@
-from crewai import Agent, Crew, Process, Task
+import os
+
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
-from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+from crewai_tools import ScrapeWebsiteTool
+from ddgs_tool import DuckDuckGoSearchTool
 
 @CrewBase
 class CompaniesResearchCrew():
+	"""CompaniesResearch crew"""
+	agents_config = 'config/agents.yaml'
+    tasks_config = 'config/tasks.yaml'
+	llm_model : LLM = None
+	
 	def __init__(self, inputs:dict) -> None:
 		super().__init__()
 		self.inputs = inputs
+		self.llm_config()
 
-	"""CompaniesResearch crew"""
+	def llm_config(self, model:str) -> LLM:
+		self.llm_model = LLM(
+			model=os.getenv('RESEARCH_LLM_MODEL', 'gpt-5-mini') if not model else model,
+		)
+		return self.llm_model
 
 	@agent
 	def researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['researcher'],
-			tools=[SerperDevTool(), ScrapeWebsiteTool()],
+			tools=[DuckDuckGoSearchTool(), ScrapeWebsiteTool()],
+			llm=self.llm_model,
 			cache=True,
 			verbose=True
 		) # type: ignore
@@ -24,7 +38,8 @@ class CompaniesResearchCrew():
 	def reporting_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
-			verbose=True
+			llm=self.llm_model,
+			verbose=True,
 		) # type: ignore
 
 	@task

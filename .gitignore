@@ -8,3 +8,4 @@ db/
 outputs/*.md
 inputs/*.pdf
 .gradio/
+uv.lock

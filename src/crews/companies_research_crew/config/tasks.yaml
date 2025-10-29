@@ -1,9 +1,9 @@
 research_task:
   description: >
-    Conduct a thorough research about {company} from {company_location}.
+    Conduct a thorough research about {company}, {company_location}.
     Make sure you find any interesting and relevant information given
     the current date is {current_date}.
-    Use the SerperDevTool to search for relevant information.
+    Use the DuckDuckGoSearchTool to search for relevant information.
     Use the {company_url} to get a base for the search.
     Search for linkedin, twitter, facebook, and other social media.
   expected_output: >
